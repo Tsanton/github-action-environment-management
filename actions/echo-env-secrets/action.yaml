@@ -1,0 +1,23 @@
+name: echo-env-secret
+description: Ensure that we're able to pass secrets as environment variables to steps in composite actions used by reusable workflows
+
+inputs:
+  env_vars:
+    description: A literal block scalar of environment variables to set up, given in env=value format.
+    required: false
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set environment variables
+      if: ${{ inputs.env_vars }}
+      run: |
+        for i in "${{ inputs.env_vars }}"
+        do
+          printf "%s\n" $i >> $GITHUB_ENV
+        done
+
+    - name: echo environment variables
+      run: |
+        printenv
