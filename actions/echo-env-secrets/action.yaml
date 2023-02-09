@@ -12,6 +12,7 @@ runs:
   steps:
     - name: Set environment variables
       if: ${{ inputs.env_vars }}
+      shell: bash
       run: |
         for i in "${{ inputs.env_vars }}"
         do
@@ -19,5 +20,6 @@ runs:
         done
 
     - name: echo environment variables
+      shell: bash
       run: |
         printenv
